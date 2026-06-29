@@ -1,0 +1,126 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background-color: #f0f0f0;
+  color: #1a1a1a;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* ── Button ── */
+#theme-switcher-button {
+  position: relative;
+  padding: 0.6rem 1.4rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: 2px solid currentColor;
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, transform 0.1s;
+}
+
+#theme-switcher-button:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+#theme-switcher-button:active {
+  transform: scale(0.97);
+}
+
+/* ── Dropdown ── */
+#theme-dropdown {
+  margin: 0;
+  padding: 0.4rem;
+  list-style: none;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: white;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  min-width: 160px;
+  overflow: hidden;
+  animation: fadeIn 0.15s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#theme-dropdown li {
+  padding: 0.55rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: #1a1a1a;
+  transition: background-color 0.15s;
+  text-transform: capitalize;
+}
+
+#theme-dropdown li:hover {
+  background-color: #f0f0f0;
+}
+
+/* ── Status message ── */
+[aria-live="polite"] {
+  font-size: 0.85rem;
+  opacity: 0.7;
+  min-height: 1.2em;
+  letter-spacing: 0.02em;
+}
+
+/* ── Light theme ── */
+body.theme-ligth {
+  background-color: #ffffff;
+  color: #1a1a1a;
+}
+
+body.theme-ligth #theme-dropdown {
+  background: #f9f9f9;
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+body.theme-ligth #theme-dropdown li:hover {
+  background-color: #ebebeb;
+}
+
+/* ── Dark theme ── */
+body.theme-dark {
+  background-color: #121212;
+  color: #e8e8e8;
+}
+
+body.theme-dark #theme-dropdown {
+  background: #1e1e1e;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.theme-dark #theme-dropdown li {
+  color: #e8e8e8;
+}
+
+body.theme-dark #theme-dropdown li:hover {
+  background-color: #2a2a2a;
+}
+
+body.theme-dark #theme-switcher-button:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
