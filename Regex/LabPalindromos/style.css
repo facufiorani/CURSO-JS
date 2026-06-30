@@ -1,0 +1,103 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+  font-family: 'Segoe UI', sans-serif;
+  color: #eee;
+}
+
+.container {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  width: 100%;
+  max-width: 480px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+h1 {
+  font-size: 1.8rem;
+  margin-bottom: 0.4rem;
+  color: #e94560;
+  letter-spacing: 1px;
+}
+
+p.subtitle {
+  font-size: 0.9rem;
+  color: #aaa;
+  margin-bottom: 1.8rem;
+}
+
+.input-group {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+#text-input {
+  flex: 1;
+  padding: 0.65rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.2s;
+}
+
+#text-input::placeholder {
+  color: #888;
+}
+
+#text-input:focus {
+  border-color: #e94560;
+}
+
+#check-btn {
+  padding: 0.65rem 1.2rem;
+  background: #e94560;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+#check-btn:hover {
+  background: #c73652;
+}
+
+#check-btn:active {
+  transform: scale(0.97);
+}
+
+#result {
+  min-height: 2rem;
+  font-size: 1.05rem;
+  font-weight: 500;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #ccc;
+  transition: all 0.3s;
+}
+
+#result:not(:empty) {
+  color: #e94560;
+  border-color: rgba(233, 69, 96, 0.3);
+  background: rgba(233, 69, 96, 0.08);
+}
