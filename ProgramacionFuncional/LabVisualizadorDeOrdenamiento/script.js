@@ -1,61 +1,61 @@
 const arrayContainer = document.getElementById("array-container");
 const startingArray = document.getElementById("starting-array");
 const generateBtn = document.getElementById("generate-btn");
-const sortBtn = document.getElementById("sort-btn")
+const sortBtn = document.getElementById("sort-btn");
 let currentArray = [];
 function generateElement() {
-    return Math.floor(Math.random() * 100) + 1;
+  return Math.floor(Math.random() * 100) + 1;
 }
 function generateArray() {
-    const arr = []
-    for (let i = 0; i < 5; i++) {
-        arr.push(generateElement());
-    }
-    return arr;
+  const arr = [];
+  for (let i = 0; i < 5; i++) {
+    arr.push(generateElement());
+  }
+  return arr;
 }
 
 function generateContainer() {
-    const container = document.createElement("div");
-    return container
+  const container = document.createElement("div");
+  return container;
 }
 
 function fillArrContainer(element, arr) {
-    for (let i = 0; i < arr.length; i++) {
-        const span = document.createElement("span");
-        span.textContent = arr[i]
-        element.appendChild(span)
-    }
+  for (let i = 0; i < arr.length; i++) {
+    const span = document.createElement("span");
+    span.textContent = arr[i];
+    element.appendChild(span);
+  }
 }
 
 function isOrdered(a, b) {
-    if (a <= b) {
-        return true;
-    }
-    return false
+  if (a <= b) {
+    return true;
+  }
+  return false;
 }
 function swapElements(arr, index) {
-    if (!isOrdered(arr[index], arr[index + 1])) {
-        [arr[index], arr[index + 1]] = [arr[index + 1], arr[index]];
-    }
+  if (!isOrdered(arr[index], arr[index + 1])) {
+    [arr[index], arr[index + 1]] = [arr[index + 1], arr[index]];
+  }
 }
 function highlightCurrentEls(element, index) {
-    const hijos = element.children
-    hijos[index].style.border = "2px dashed red";
-    hijos[index + 1].style.border = "2px dashed red";
+  const hijos = element.children;
+  hijos[index].style.border = "2px dashed red";
+  hijos[index + 1].style.border = "2px dashed red";
 }
 
 function handleGenerate() {
   // 1. vaciar los spans viejos de starting-array
-    startingArray.innerHTML = "";
+  startingArray.innerHTML = "";
 
-    // 2. eliminar los divs de pasos anteriores (dejar solo starting-array)
-    while (arrayContainer.children.length > 1) {
-        arrayContainer.lastElementChild.remove();
-    }
+  // 2. eliminar los divs de pasos anteriores (dejar solo starting-array)
+  while (arrayContainer.children.length > 1) {
+    arrayContainer.lastElementChild.remove();
+  }
 
-    // 3. generar y dibujar
-    currentArray = generateArray();
-    fillArrContainer(startingArray, currentArray);
+  // 3. generar y dibujar
+  currentArray = generateArray();
+  fillArrContainer(startingArray, currentArray);
 }
 
 function handleSort() {
@@ -80,6 +80,5 @@ function handleSort() {
   }
 }
 
-
-generateBtn.addEventListener('click', handleGenerate) 
+generateBtn.addEventListener("click", handleGenerate);
 sortBtn.addEventListener("click", handleSort);

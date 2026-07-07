@@ -1,0 +1,325 @@
+/* ===========================================================
+   App del Tiempo — estilos
+   Layout hecho 100% con CSS (Grid + pseudo-elementos),
+   sin tocar el HTML ni el JS.
+   =========================================================== */
+
+:root {
+    --sky-1: #1e3c72;
+    --sky-2: #2a5298;
+    --sky-3: #6dd5fa;
+    --accent: #ffd166;
+    --accent-2: #ff7b54;
+    --glass: rgba(255, 255, 255, 0.14);
+    --glass-brd: rgba(255, 255, 255, 0.28);
+    --txt: #f5f9ff;
+    --txt-soft: rgba(245, 249, 255, 0.72);
+    --radius: 26px;
+    --shadow: 0 24px 60px rgba(6, 20, 45, 0.45);
+    --font: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ---------- Fondo: cielo animado ---------- */
+body {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    font-family: var(--font);
+    color: var(--txt);
+    background: linear-gradient(135deg, #0f2027, #203a5f 40%, #2c5364 70%, #6dd5fa);
+    background-size: 300% 300%;
+    animation: skyShift 18s ease infinite;
+    overflow-x: hidden;
+}
+
+@keyframes skyShift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Sol/luz difusa decorativa */
+body::before {
+    content: "";
+    position: fixed;
+    top: -160px;
+    right: -120px;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 224, 130, 0.55), rgba(255, 224, 130, 0) 70%);
+    filter: blur(10px);
+    pointer-events: none;
+    animation: floatGlow 12s ease-in-out infinite alternate;
+}
+
+@keyframes floatGlow {
+    from { transform: translateY(0) scale(1); }
+    to   { transform: translateY(40px) scale(1.12); }
+}
+
+/* ---------- Tarjeta principal (glassmorphism) ---------- */
+main {
+    position: relative;
+    width: min(440px, 100%);
+    padding: 30px 30px 34px;
+    background: var(--glass);
+    border: 1px solid var(--glass-brd);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(22px) saturate(140%);
+    -webkit-backdrop-filter: blur(22px) saturate(140%);
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 14px;
+    align-items: center;
+    grid-template-areas:
+        "select   button"
+        "icon     temp"
+        "location location"
+        "wmain    wmain"
+        "feels    feels"
+        "humidity wind"
+        "gust     gust";
+    animation: rise 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes rise {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Controles: select + botón ---------- */
+#city-select {
+    grid-area: select;
+    appearance: none;
+    -webkit-appearance: none;
+    width: 100%;
+    padding: 13px 40px 13px 16px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    color: var(--txt);
+    background-color: rgba(255, 255, 255, 0.10);
+    border: 1px solid var(--glass-brd);
+    border-radius: 14px;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.25s, background-color 0.25s;
+    /* flecha personalizada */
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+}
+
+#city-select:hover,
+#city-select:focus {
+    border-color: var(--accent);
+    background-color: rgba(255, 255, 255, 0.18);
+}
+
+#city-select option {
+    color: #12233d;
+    background: #eaf3ff;
+}
+
+#get-weather-btn {
+    grid-area: button;
+    width: 100%;
+    padding: 13px 16px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    font-family: inherit;
+    letter-spacing: 0.3px;
+    color: #21160a;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    box-shadow: 0 8px 22px rgba(255, 123, 84, 0.4);
+    transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+}
+
+#get-weather-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(255, 123, 84, 0.55);
+    filter: brightness(1.05);
+}
+
+#get-weather-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 6px 16px rgba(255, 123, 84, 0.45);
+}
+
+/* ---------- Ícono del clima ---------- */
+#weather-icon {
+    grid-area: icon;
+    width: 110px;
+    height: 110px;
+    justify-self: center;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.35));
+    animation: bob 4s ease-in-out infinite;
+}
+
+@keyframes bob {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-8px); }
+}
+
+/* Oculta el ícono cuando todavía no hay imagen cargada */
+#weather-icon[src=""],
+#weather-icon:not([src]) {
+    display: none;
+}
+
+/* ---------- Temperatura principal ---------- */
+#main-temperature {
+    grid-area: temp;
+    justify-self: center;
+    font-size: 3.6rem;
+    font-weight: 700;
+    line-height: 1;
+    background: linear-gradient(180deg, #ffffff, #cfe9ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 4px 18px rgba(0, 0, 0, 0.2);
+}
+
+#main-temperature::after {
+    content: "°";
+    -webkit-text-fill-color: var(--accent);
+    color: var(--accent);
+}
+
+/* ---------- Ubicación (ciudad) ---------- */
+#location {
+    grid-area: location;
+    justify-self: center;
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+}
+
+#location::before {
+    content: "📍 ";
+    font-size: 1.2rem;
+}
+
+/* ---------- Tipo de clima ---------- */
+#weather-main {
+    grid-area: wmain;
+    justify-self: center;
+    margin-top: -6px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--txt-soft);
+}
+
+/* ---------- Sensación térmica ---------- */
+#feels-like {
+    grid-area: feels;
+    justify-self: center;
+    padding: 8px 18px;
+    font-size: 0.95rem;
+    color: var(--txt);
+    background: rgba(255, 255, 255, 0.10);
+    border: 1px solid var(--glass-brd);
+    border-radius: 999px;
+}
+
+#feels-like::before {
+    content: "Sensación térmica  ";
+    color: var(--txt-soft);
+}
+
+#feels-like::after {
+    content: "°";
+    color: var(--accent);
+    font-weight: 700;
+}
+
+/* ---------- Tarjetas de detalle: humedad / viento / ráfagas ---------- */
+#humidity,
+#wind,
+#wind-gust {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 14px 10px;
+    font-size: 1.35rem;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--glass-brd);
+    border-radius: 16px;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+#humidity:hover,
+#wind:hover,
+#wind-gust:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.14);
+}
+
+#humidity  { grid-area: humidity; }
+#wind      { grid-area: wind; }
+#wind-gust { grid-area: gust; }
+
+/* Etiqueta (arriba) y unidad (al costado del número) en las tarjetas */
+#humidity::before,
+#wind::before,
+#wind-gust::before {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--txt-soft);
+    order: -1;
+}
+
+#humidity::after,
+#wind::after,
+#wind-gust::after {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--txt-soft);
+}
+
+#humidity::before  { content: "💧 Humedad"; }
+#humidity::after   { content: "%"; }
+
+#wind::before      { content: "🌬️ Viento"; }
+#wind::after       { content: "m/s"; }
+
+#wind-gust::before { content: "💨 Ráfagas"; }
+#wind-gust::after  { content: "m/s"; }
+
+/* ---------- Estado vacío: ocultar campos sin datos ---------- */
+main > p:empty {
+    display: none;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 400px) {
+    main {
+        padding: 24px 20px 28px;
+        gap: 14px 10px;
+    }
+
+    #main-temperature { font-size: 3rem; }
+    #location { font-size: 1.5rem; }
+    #weather-icon { width: 92px; height: 92px; }
+}
