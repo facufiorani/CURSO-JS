@@ -58,14 +58,6 @@ function handleGenerate() {
     fillArrContainer(startingArray, currentArray);
 }
 
-function renderStep(arr, index) {
-    const container = generateContainer();
-    fillArrContainer(container, arr);
-    if (index + 1 < arr.length) {
-        highlightCurrentEls(container, index);
-    }
-    arrayContainer.appendChild(container);
-}
 function handleSort() {
   let swapped = true;
   while (swapped) {
